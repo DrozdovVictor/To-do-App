@@ -1,0 +1,31 @@
+@import url('style.css');
+
+@media (max-width: 414px) {
+  .container {
+    width: 300px;
+  }
+
+  .task-list__tasks-list, .completed-tasks {
+    align-items: center;
+  }
+
+  .task-list__item {
+    width: 75%;
+    flex-direction: column;
+    row-gap: 14px;
+  }
+
+  .task-list__item-heading {
+    text-align: center;
+  }
+
+  .task-list__item-text {
+    text-align: center;
+  }
+
+  .task-list__item-nav {
+    width: 100%;
+    justify-content: space-around;
+    column-gap: 0px;
+  }
+}
