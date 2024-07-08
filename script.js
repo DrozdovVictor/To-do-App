@@ -8,6 +8,7 @@ const taskListTime = [
   document.getElementById("task-list-time-add"),
   document.getElementById("task-list-time-edit"),
 ];
+const tastListDate = document.getElementById("current-date");
 
 /* Main */
 
@@ -54,7 +55,21 @@ setInterval(function () {
   }
 
   taskListTime.forEach((el) => (el.textContent = `${now}`));
-}, 100);
+}, 1000);
+
+function setCurrentDay() {
+  if (new Date().getDate() < 8 || new Date().getMonth() < 8) {
+    tastListDate.innerHTML = `0${new Date().getDate()}/0${
+      new Date().getMonth() + 1
+    }  <span class="task-list__date-line"></span>`;
+  } else {
+    tastListDate.innerHTML = `${new Date().getDate()}/${
+      new Date().getMonth() + 1
+    }  <span class="task-list__date-line"></span>`;
+  }
+}
+
+setCurrentDay();
 
 /* Show first example task during load */
 
@@ -133,7 +148,8 @@ taskListSliderWrapper.addEventListener("click", function (event) {
     case "edit":
       clearAllDataActiveAttrs(),
         targetTask.setAttribute("data-active", "active"),
-        startEditTask();
+        startEditTask(),
+        getCurrentTaskValues();
       break;
     case "done":
       completedTasks.append(makeCompletedTaskFromTemlate(targetTask)),
@@ -153,7 +169,6 @@ taskListSliderWrapper.addEventListener("click", function (event) {
       break;
   }
 
-  console.log(targetEL.dataset.action);
   safeAllTasks();
   safeCompletedTasks();
 });
@@ -235,31 +250,35 @@ function changeHeaderContentForAllTasks() {
   headerCalendar.style.display = "block";
 }
 
-allTasksBtn.addEventListener("click", function () {
-  taskListHeaderContent.style.animation = "easyShow .3s";
-  setTimeout(function () {
-    taskListHeaderContent.style.animation = "none";
-  });
+function turnToAllTasksList() {
   changeHeaderContentForAllTasks();
   allTasksBtn.classList.remove("disabled");
   completedTasksBtn.classList.add("disabled");
 
   taskListSlider.scrollLeft -=
     taskListSliderWrapper.offsetWidth - taskListSlider.offsetWidth;
-});
+}
 
-completedTasksBtn.addEventListener("click", function () {
-  taskListHeaderContent.style.animation = "easyShow .3s";
-  setTimeout(function () {
-    taskListHeaderContent.style.animation = "none";
-  });
+function turnToCompletedTasksList() {
   changeHeaderContentForCompletedTasks();
   completedTasksBtn.classList.remove("disabled");
   allTasksBtn.classList.add("disabled");
 
   taskListSlider.scrollLeft =
     taskListSliderWrapper.offsetWidth - taskListSlider.offsetWidth;
-});
+}
+
+allTasksBtn.addEventListener("click", turnToAllTasksList);
+
+completedTasksBtn.addEventListener("click", turnToCompletedTasksList);
+
+allTasksList.addEventListener("mouseover", turnToAllTasksList);
+
+completedTasks.addEventListener("mouseover", turnToCompletedTasksList);
+
+allTasksList.addEventListener("touchmove", turnToCompletedTasksList);
+
+completedTasks.addEventListener("touchmove", turnToAllTasksList);
 
 /* Add Task Section */
 
@@ -357,14 +376,9 @@ function makeUncompletedTaskFromTemplate(el) {
   return el;
 }
 
-addTaskBtnBack.addEventListener("click", function () {
-  addTaskPage.style.animation = "hide .3s";
-  setTimeout(function () {
-    addTaskPage.style.display = "none";
-  }, 100);
-});
+taskBtnAdd.addEventListener("click", addTask);
 
-taskBtnAdd.addEventListener("click", function () {
+function addTask() {
   let newTask = getTaskTemplate();
 
   allTasksList.append(newTask);
@@ -378,7 +392,16 @@ taskBtnAdd.addEventListener("click", function () {
   taskDescription.value = "";
 
   safeAllTasks();
-});
+}
+
+addTaskBtnBack.addEventListener("click", closeAddTaskPage);
+
+function closeAddTaskPage() {
+  addTaskPage.style.animation = "hide .3s";
+  setTimeout(function () {
+    addTaskPage.style.display = "none";
+  }, 100);
+}
 
 function showAndHideAddTaskWarning() {
   addTaskWarning.style.animation = "showFromTop .3s";
@@ -421,6 +444,23 @@ backBtnAtEditPage.addEventListener("click", function () {
 });
 
 function getCurrentTaskValues() {
+  const currentTask = allTasksList.querySelector('[data-active="active"]');
+  const currentTitle = currentTask.querySelector(".task-list__item-heading");
+  const currentDescription = currentTask.querySelector(".task-list__item-text");
+
+  editTaskTitle.value = currentTitle.textContent;
+  editTaskDescription.value = currentDescription.textContent;
+
+  if (currentTitle.textContent === "Todo title") {
+    editTaskTitle.value = "";
+  }
+
+  if (currentDescription.textContent === "Todo decription") {
+    editTaskDescription.value = "";
+  }
+}
+
+function setEditTaskValues() {
   setTimeout(function () {
     const currentTask = allTasksList.querySelector('[data-active="active"]');
 
@@ -460,7 +500,7 @@ function clearAllDataActiveAttrs() {
 }
 
 editTaskBtn.addEventListener("click", function () {
-  getCurrentTaskValues();
+  setEditTaskValues();
   closeEditTaskPage();
 });
 
@@ -507,7 +547,6 @@ function indexAfterUndoneBtn(undoneTask, personalIndex) {
     el.remove();
     allTasksListArr.forEach((el) => allTasksList.append(el));
   });
-  console.log(allTasksListArr);
 }
 
 /* Show and Hide text while no task */
@@ -555,3 +594,26 @@ function hideCompletedTaskText() {
 
   safeCompletedTasks();
 }
+
+/* Keyboard Btns Clcks */
+
+function enterClick() {
+  window.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      taskAddBtn;
+      console.log(taskAddBtn.querySelector(".task-list__add-btn-plus"));
+      if (addTaskPage.style.display === "flex") {
+        addTask();
+        safeAllTasks();
+      }
+
+      if (editTaskPage.style.display === "flex") {
+        setEditTaskValues();
+        closeEditTaskPage();
+        safeAllTasks();
+      }
+    }
+  });
+}
+
+enterClick();

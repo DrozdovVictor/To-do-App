@@ -1,11 +1,12 @@
-@import url('style.css');
+@import url("style.css");
 
 @media (max-width: 414px) {
   .container {
     width: 300px;
   }
 
-  .task-list__tasks-list, .completed-tasks {
+  .task-list__tasks-list,
+  .completed-tasks {
     align-items: center;
   }
 
@@ -27,5 +28,11 @@
     width: 100%;
     justify-content: space-around;
     column-gap: 0px;
+  }
+}
+
+@media (min-width: 415px) {
+  .task-list__item-text {
+    font-size: 13px;
   }
 }

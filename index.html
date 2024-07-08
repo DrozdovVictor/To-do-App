@@ -23,7 +23,7 @@
       <header class="task-list__header">
         <div class="container">
           <nav class="task-list__nav">
-            <p class="task-list__time" id="task-list-time-main"></p>
+            <time class="task-list__time" id="task-list-time-main"></time>
             <div class="task-list__nav-items">
               <img src="Images/header/network.svg" alt="network" />
               <img src="Images/header/wi-fi.svg" alt="wi-fi" />
@@ -32,11 +32,9 @@
           </nav>
           <div class="task-list__content" id="task-list-header-content">
             <h1 class="task-list__h1">Todo app</h1>
-            <img
-              class="task-list__date"
-              src="Images/header/date.svg"
-              alt="date"
-            />
+            <div class="task-list__date" id="current-date">
+              <span class="task-list__date-line"></span>
+            </div>
           </div>
         </div>
       </header>
@@ -121,7 +119,7 @@
         <header class="task-list__header">
           <div class="container">
             <nav class="task-list__nav">
-              <p class="task-list__time" id="task-list-time-add">9:41</p>
+              <time class="task-list__time" id="task-list-time-add"></time>
               <div class="task-list__nav-items">
                 <img src="Images/header/network.svg" alt="network" />
                 <img src="Images/header/wi-fi.svg" alt="wi-fi" />
@@ -181,7 +179,7 @@
         <header class="task-list__header">
           <div class="container">
             <nav class="task-list__nav">
-              <p class="task-list__time" id="task-list-time-edit">9:41</p>
+              <time class="task-list__time" id="task-list-time-edit">9:41</time>
               <div class="task-list__nav-items">
                 <img src="Images/header/network.svg" alt="network" />
                 <img src="Images/header/wi-fi.svg" alt="wi-fi" />
@@ -214,7 +212,6 @@
             placeholder="Title"
             required
             autocomplete="off"
-            maxlength="15"
             id="edit-task-title"
           />
           <input
@@ -222,7 +219,6 @@
             placeholder="Detail"
             autocomplete="off"
             type="text"
-            maxlength="30"
             id="edit-task-description"
           />
           <button

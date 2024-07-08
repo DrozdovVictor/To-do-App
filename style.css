@@ -172,16 +172,50 @@ p {
 }
 
 .task-list__content {
+  height: 78px;
   padding: 16px 12px 24px;
   display: flex;
   justify-content: space-between;
 }
 
 .task-list__date {
-  width: 30px;
-  height: 30px;
+  position: relative;
+  padding: 9px 10px 5px;
 
-  fill: var(--white);
+  border: 2px solid var(--white);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--white);
+  cursor: default;
+}
+
+.task-list__date-line {
+  position: absolute;
+  top: 3px;
+  left: 0px;
+
+  width: 100%;
+  height: 2px;
+  background-color: var(--white);
+}
+
+.task-list__date:before,
+.task-list__date:after {
+  content: "";
+  position: absolute;
+  top: -4px;
+
+  width: 2px;
+  height: 6px;
+  background-color: var(--white);
+}
+
+.task-list__date:before {
+  left: 13px;
+}
+
+.task-list__date:after {
+  right: 13px;
 }
 
 /* main */
@@ -271,8 +305,15 @@ p {
   max-width: 215px;
 }
 
+.task-list__item-heading {
+  max-width: 200px;
+  word-break: break-all;
+}
+
 .task-list__item-text {
-  max-width: 215px;
+  max-width: 170px;
+  word-break: break-all;
+  font-size: 12px;
 }
 
 .task-list__empty-all-tasks-text,
@@ -368,6 +409,7 @@ p {
   width: 70px;
   height: 70px;
   border: 3px solid var(--main);
+  outline: 0px;
   border-radius: 50%;
   background-color: var(--main);
 
@@ -381,6 +423,10 @@ p {
 
 .task-list__add-btn:hover {
   cursor: pointer;
+  background-color: transparent;
+}
+
+.task-list__add-btn:active {
   background-color: transparent;
 }
 
@@ -541,6 +587,7 @@ p {
   border-bottom: 2px solid var(--gray);
 
   font-size: 22px;
+  transition: 0.2s;
 }
 
 .add-task__input::-webkit-scrollbar {
@@ -553,6 +600,7 @@ p {
 
 .add-task__input:focus {
   outline: 0px;
+  border-bottom: 2px solid var(--main);
 }
 
 .add-task__input.description {
@@ -560,8 +608,8 @@ p {
 }
 
 .task-list__add-task-btn {
-  padding: 20px 0px;
-  border: 0px;
+  padding: 16px 0px;
+  border: 2px solid var(--main);
   border-radius: 15px;
   background-color: var(--main);
 
@@ -571,6 +619,18 @@ p {
   color: var(--white);
 
   box-shadow: var(--shadow);
+  transition: 0.3s;
+}
+
+.task-list__add-task-btn:hover {
+  cursor: pointer;
+  color: var(--main);
+  background-color: transparent;
+}
+
+.task-list__add-task-btn:active {
+  color: var(--main);
+  background-color: transparent;
 }
 
 /* Add Task Warning */
@@ -609,8 +669,8 @@ p {
 }
 
 .task-list__edit-task-btn {
-  padding: 20px 0px;
-  border: 0px;
+  padding: 16px 0px;
+  border: 2px solid var(--main);
   border-radius: 15px;
   background-color: var(--main);
 
@@ -620,4 +680,14 @@ p {
   color: var(--white);
 
   box-shadow: var(--shadow);
+  transition: 0.3s;
+}
+
+.task-list__edit-task-btn:hover {
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.task-list__edit-task-btn:active {
+  background-color: transparent;
 }
